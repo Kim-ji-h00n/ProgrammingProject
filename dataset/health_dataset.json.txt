@@ -1,0 +1,32 @@
+[
+  {
+    "name": "user1",
+    "sleepHours": 6.8,
+    "heartRate": 72,
+    "stressLevel": 35
+  },
+  {
+    "name": "user2",
+    "sleepHours": 5.5,
+    "heartRate": 88,
+    "stressLevel": 65
+  },
+  {
+    "name": "user3",
+    "sleepHours": 7.2,
+    "heartRate": 69,
+    "stressLevel": 28
+  },
+  {
+    "name": "user4",
+    "sleepHours": 4.6,
+    "heartRate": 95,
+    "stressLevel": 78
+  },
+  {
+    "name": "user5",
+    "sleepHours": 6.1,
+    "heartRate": 81,
+    "stressLevel": 50
+  }
+]
