@@ -1,0 +1,70 @@
+body {
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #f6f6f6;
+}
+
+header {
+  background: #444;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+}
+
+.slogan {
+  font-size: 0.9rem;
+  margin-top: 5px;
+}
+
+main {
+  padding: 20px;
+}
+
+.greeting input {
+  width: 100%;
+  padding: 10px;
+  font-size: 1.1rem;
+  margin-top: 10px;
+}
+
+.status {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0;
+}
+
+.card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 15px;
+  width: 48%;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.recommendation button {
+  width: 100%;
+  padding: 12px;
+  background: #4CAF50;
+  color: white;
+  border: none;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+#recommendationResult {
+  margin-top: 15px;
+  font-weight: bold;
+  text-align: center;
+}
+
+footer nav {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: #ddd;
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 0;
+}

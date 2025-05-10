@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EverFit</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>EverFit</h1>
+    <p class="slogan">습관이 되는 건강, EverFit과 함께</p>
+  </header>
+
+  <main>
+    <section class="greeting">
+      <h2>Good Morning</h2>
+      <input type="text" id="moodInput" placeholder="How are you feeling?" />
+    </section>
+
+    <section class="status">
+      <div class="card">
+        <p>Activity</p>
+        <input type="number" id="calories" placeholder="### kcal" />
+      </div>
+      <div class="card">
+        <p>Sleep</p>
+        <input type="number" id="sleepHours" placeholder="시간 (h)" />
+        <input type="number" id="sleepMinutes" placeholder="분 (min)" />
+      </div>
+    </section>
+
+    <section class="recommendation">
+      <button onclick="getRecommendation()">운동 추천받기</button>
+      <div id="recommendationResult"></div>
+    </section>
+  </main>
+
+  <footer>
+    <nav>
+      <button>🏠</button>
+      <button>📈</button>
+      <button>➕</button>
+      <button>💬</button>
+    </nav>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
