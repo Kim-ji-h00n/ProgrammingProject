@@ -1,0 +1,122 @@
+[
+  {
+    "name": "user1",
+    "sleepHours": 6.8,
+    "heartRate": 72,
+    "stressLevel": 35
+  },
+  {
+    "name": "user2",
+    "sleepHours": 5.5,
+    "heartRate": 88,
+    "stressLevel": 65
+  },
+  {
+    "name": "user3",
+    "sleepHours": 7.2,
+    "heartRate": 69,
+    "stressLevel": 28
+  },
+  {
+    "name": "user4",
+    "sleepHours": 4.6,
+    "heartRate": 95,
+    "stressLevel": 78
+  },
+  {
+    "name": "user5",
+    "sleepHours": 6.1,
+    "heartRate": 81,
+    "stressLevel": 50
+  },
+  {
+    "name": "user6",
+    "sleepHours": 7.5,
+    "heartRate": 66,
+    "stressLevel": 22
+  },
+  {
+    "name": "user7",
+    "sleepHours": 5.2,
+    "heartRate": 90,
+    "stressLevel": 70
+  },
+  {
+    "name": "user8",
+    "sleepHours": 6.3,
+    "heartRate": 73,
+    "stressLevel": 45
+  },
+  {
+    "name": "user9",
+    "sleepHours": 8.0,
+    "heartRate": 65,
+    "stressLevel": 30
+  },
+  {
+    "name": "user10",
+    "sleepHours": 4.9,
+    "heartRate": 93,
+    "stressLevel": 85
+  },
+  {
+    "name": "user11",
+    "sleepHours": 6.5,
+    "heartRate": 77,
+    "stressLevel": 40
+  },
+  {
+    "name": "user12",
+    "sleepHours": 7.9,
+    "heartRate": 64,
+    "stressLevel": 25
+  },
+  {
+    "name": "user13",
+    "sleepHours": 5.7,
+    "heartRate": 85,
+    "stressLevel": 62
+  },
+  {
+    "name": "user14",
+    "sleepHours": 6.4,
+    "heartRate": 79,
+    "stressLevel": 48
+  },
+  {
+    "name": "user15",
+    "sleepHours": 7.3,
+    "heartRate": 70,
+    "stressLevel": 33
+  },
+  {
+    "name": "user16",
+    "sleepHours": 4.5,
+    "heartRate": 97,
+    "stressLevel": 90
+  },
+  {
+    "name": "user17",
+    "sleepHours": 5.8,
+    "heartRate": 83,
+    "stressLevel": 55
+  },
+  {
+    "name": "user18",
+    "sleepHours": 6.9,
+    "heartRate": 68,
+    "stressLevel": 38
+  },
+  {
+    "name": "user19",
+    "sleepHours": 7.6,
+    "heartRate": 67,
+    "stressLevel": 27
+  },
+  {
+    "name": "user20",
+    "sleepHours": 6.0,
+    "heartRate": 80,
+    "stressLevel": 52
+  }
+]
