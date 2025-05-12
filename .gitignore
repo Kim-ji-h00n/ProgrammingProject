@@ -3,5 +3,3 @@ build/
 *.exe
 *.log
 *.user
-*.sln
-*.vcxproj*
