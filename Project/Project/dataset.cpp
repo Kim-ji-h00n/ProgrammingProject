@@ -1,0 +1,64 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <vector>
+#include "json.hpp"
+
+using json = nlohmann::json;
+using namespace std;
+
+struct HealthStatus {
+    string name;
+    float sleepHours;
+    int heartRate;
+    int stressLevel;
+
+    void printRecommendation() const {
+        cout << "▶ 사용자: " << name << endl;
+        cout << "  - 수면: " << sleepHours << "시간 | 심박수: " << heartRate << "bpm | 스트레스: " << stressLevel << endl;
+
+        if (sleepHours < 5 || stressLevel > 70) {
+            cout << "  → 운동 강도: 약함" << endl;
+            cout << "  → 추천 운동: 스트레칭, 요가, 가벼운 걷기" << endl;
+        }
+        else if (heartRate > 90 || sleepHours < 6) {
+            cout << "  → 운동 강도: 보통" << endl;
+            cout << "  → 추천 운동: 러닝, 푸쉬업, 덤벨 스쿼트" << endl;
+        }
+        else {
+            cout << "  → 운동 강도: 강함" << endl;
+            cout << "  → 추천 운동: 스쿼트, 벤치프레스, 데드리프트" << endl;
+        }
+
+        cout << "-------------------------------\n";
+    }
+};
+
+vector<HealthStatus> loadHealthDataset(const string& filename) {
+    ifstream file(filename);
+    json data;
+    file >> data;
+
+    vector<HealthStatus> result;
+
+    for (const auto& person : data) {
+        HealthStatus hs;
+        hs.name = person["name"];
+        hs.sleepHours = person["sleepHours"];
+        hs.heartRate = person["heartRate"];
+        hs.stressLevel = person["stressLevel"];
+        result.push_back(hs);
+    }
+
+    return result;
+}
+
+int main() {
+    vector<HealthStatus> users = loadHealthDataset("health_dataset.json");
+
+    for (const auto& user : users) {
+        user.printRecommendation();
+    }
+
+    return 0;
+}
