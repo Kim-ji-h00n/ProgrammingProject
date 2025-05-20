@@ -1,0 +1,3 @@
+/Users/hoon/health_ai_project 2/cmake-build-debug/CMakeFiles/HealthAI.dir
+/Users/hoon/health_ai_project 2/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/hoon/health_ai_project 2/cmake-build-debug/CMakeFiles/rebuild_cache.dir
