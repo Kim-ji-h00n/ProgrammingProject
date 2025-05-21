@@ -191,5 +191,40 @@
       if (localStorage.getItem('loggedIn') === 'true') showMain();
     };
   </script>
+
+<h2>Health Data Table</h2>
+<table id="health-table" border="1">
+  <thead id="table-head"></thead>
+  <tbody id="table-body"></tbody>
+</table>
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
+<script>
+  // CSV 파일 경로 (동일 서버 위치 기준)
+  const csvFilePath = 'AnHyowon/health_dataset.csv';
+
+  // CSV 파일 불러오기
+  Papa.parse(csvFilePath, {
+    download: true,
+    header: true,
+    complete: function(results) {
+      const data = results.data;
+      if (data.length === 0) return;
+
+      // 헤더 처리
+      const columns = Object.keys(data[0]);
+      let thead = '<tr>' + columns.map(col => `<th>${col}</th>`).join('') + '</tr>';
+      document.getElementById('table-head').innerHTML = thead;
+
+      // 데이터 처리
+      let tbody = '';
+      data.forEach(row => {
+        tbody += '<tr>' + columns.map(col => `<td>${row[col] ?? ''}</td>`).join('') + '</tr>';
+      });
+      document.getElementById('table-body').innerHTML = tbody;
+    }
+});
+</script>
+
+
 </body>
 </html>
