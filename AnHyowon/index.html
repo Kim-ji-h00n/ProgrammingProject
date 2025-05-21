@@ -5,169 +5,189 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PlanAll – 당신의 운동 스케줄을 계획해 드립니다</title>
   <style>
-    /* Reset & Base Styles */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Noto Sans KR', sans-serif; line-height: 1.6; color: #333; }
-    a { color: #0066cc; text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    section { padding: 60px 20px; }
-    h2 { font-size: 2rem; margin-bottom: 20px; }
-    .container { max-width: 1000px; margin: auto; }
-
+    /* Reset & Base */
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'Noto Sans KR',sans-serif; color:#333; }
+    a { color:#0066cc; text-decoration:none; }
+    a:hover { text-decoration:underline; }
+    .hidden { display:none; }
     /* Header */
-    header { background: #fff; border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 100; }
-    .nav { display: flex; justify-content: space-between; align-items: center; padding: 20px; }
-    .nav .logo { font-size: 1.5rem; font-weight: bold; }
-    .nav ul { display: flex; list-style: none; }
-    .nav li { margin-left: 20px; }
-
+    header { background:#fff; border-bottom:1px solid #eee; position:sticky; top:0; z-index:100; }
+    .nav { display:flex; justify-content:space-between; align-items:center; padding:20px; }
+    .nav .logo { font-size:1.5rem; font-weight:bold; }
+    .nav ul { display:flex; list-style:none; }
+    .nav li { margin-left:20px; }
+    .btn { padding:10px 20px; border:none; border-radius:4px; cursor:pointer; }
+    /* Login */
+    #login { display:flex; justify-content:center; align-items:center; height:100vh; background:#f5f5f5; }
+    #login .form { background:#fff; padding:40px; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.1); width:300px; }
+    #login h2 { margin-bottom:20px; text-align:center; }
+    #login input { width:100%; padding:10px; margin-bottom:15px; border:1px solid #ccc; border-radius:4px; }
+    #login .btn-login { background:#ff6b6b; color:#fff; width:100%; }
+    /* Sections */
+    section { padding:60px 20px; }
+    .container { max-width:1000px; margin:auto; }
+    h2 { font-size:2rem; margin-bottom:20px; }
     /* Hero */
-    #hero { background: url('hero-bg.jpg') center/cover no-repeat; color: #fff; text-align: center; padding: 120px 20px; }
-    #hero h1 { font-size: 3rem; margin-bottom: 20px; }
-    #hero p { font-size: 1.2rem; margin-bottom: 30px; }
-    #hero .btn { background: #ff6b6b; color: #fff; padding: 12px 24px; border-radius: 4px; }
-
-    /* About & Features */
-    .features, .comparison { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-    .feature-item, .compare-item { background: #f9f9f9; padding: 20px; border-radius: 8px; }
-
-    /* Comparison Table */
-    .comparison table { width: 100%; border-collapse: collapse; }
-    .comparison th, .comparison td { border: 1px solid #ddd; padding: 12px; text-align: center; }
-    .comparison th { background: #f1f1f1; }
-
+    #hero { background:url('hero-bg.jpg') center/cover no-repeat; color:#fff; text-align:center; padding:120px 20px; }
+    #hero h1 { font-size:3rem; margin-bottom:20px; }
+    /* Features */
+    .features { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:20px; }
+    .feature-item { background:#f9f9f9; padding:20px; border-radius:8px; }
+    /* Comparison */
+    .comparison table { width:100%; border-collapse:collapse; }
+    .comparison th, .comparison td { border:1px solid #ddd; padding:12px; }
+    .comparison th { background:#f1f1f1; }
     /* Footer */
-    footer { background: #333; color: #fff; text-align: center; padding: 20px; }
+    footer { background:#333; color:#fff; text-align:center; padding:20px; }
   </style>
 </head>
 <body>
-  <!-- Header -->
-  <header>
-    <nav class="nav container">
-      <div class="logo">PlanAll</div>
-      <ul>
-        <li><a href="#about">About</a></li>
-        <li><a href="#features">Features</a></li>
-        <li><a href="#comparison">Comparison</a></li>
-        <li><a href="#benefits">Benefits</a></li>
-        <li><a href="#team">Team</a></li>
-      </ul>
-    </nav>
-  </header>
-
-  <!-- Hero Section -->
-  <section id="hero">
-    <div class="container">
-      <h1>PlanAll</h1>
-      <p>AI 기반 맞춤형 운동 스케줄을 자동으로 생성해드립니다.</p>
-      <a href="#about" class="btn">더 알아보기</a>
+  <!-- Login Form -->
+  <div id="login">
+    <div class="form">
+      <h2>PlanAll 로그인</h2>
+      <input type="text" id="username" placeholder="아이디" />
+      <input type="password" id="password" placeholder="비밀번호" />
+      <button class="btn btn-login" onclick="login()">로그인</button>
+      <p id="error" style="color:red; text-align:center; display:none;">아이디 또는 비밀번호가 올바르지 않습니다.</p>
     </div>
-  </section>
+  </div>
 
-  <!-- About Section -->
-  <section id="about">
-    <div class="container">
-      <h2>About PlanAll</h2>
-      <p>PlanAll은 개인의 신체 데이터(심박수, 수면량 등)와 운동 선호도를 분석해 최적의 운동 스케줄을 자동 생성하는 AI 기반 코칭 시스템입니다. 건강 패턴 학습과 동기부여 시스템을 통해 지속적이고 체계적인 건강 관리를 지원합니다.</p>
-    </div>
-  </section>
+  <!-- Main Content -->
+  <div id="mainContent" class="hidden">
+    <!-- Header -->
+    <header>
+      <nav class="nav container">
+        <div class="logo">PlanAll</div>
+        <ul>
+          <li><a href="#hero">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#comparison">Comparison</a></li>
+          <li><a href="#benefits">Benefits</a></li>
+        </ul>
+        <button class="btn" onclick="logout()">로그아웃</button>
+      </nav>
+    </header>
 
-  <!-- Features Section -->
-  <section id="features">
-    <div class="container">
-      <h2>Key Features</h2>
-      <div class="features">
-        <div class="feature-item">
-          <h3>데이터 수집 및 분석</h3>
-          <p>스마트워치, 스마트폰 앱 등에서 실시간으로 수면량, 심박수 데이터를 수집하고 분석합니다.</p>
-        </div>
-        <div class="feature-item">
-          <h3>머신러닝 기반 추천</h3>
-          <p>딥러닝 및 강화학습 기법을 활용해 개인별 최적의 운동 루틴을 추천합니다.</p>
-        </div>
-        <div class="feature-item">
-          <h3>실시간 피드백</h3>
-          <p>사용자의 컨디션 변화를 실시간으로 반영하여 운동 강도와 종류를 조절합니다.</p>
-        </div>
-        <div class="feature-item">
-          <h3>동기부여 시스템</h3>
-          <p>운동 과정 기록과 목표 달성 알림을 통해 지속적인 동기부여를 제공합니다.</p>
+    <!-- Hero Section -->
+    <section id="hero">
+      <div class="container">
+        <h1>PlanAll</h1>
+        <p>AI 기반 맞춤형 운동 스케줄을 자동으로 생성해드립니다.</p>
+        <a href="#about" class="btn">더 알아보기</a>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+      <div class="container">
+        <h2>About PlanAll</h2>
+        <p>PlanAll은 개인의 신체 데이터(심박수, 수면량 등)와 운동 선호도를 분석해 최적의 운동 스케줄을 자동 생성하는 AI 기반 코칭 시스템입니다.</p>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features">
+      <div class="container">
+        <h2>Key Features</h2>
+        <div class="features">
+          <div class="feature-item">
+            <h3>데이터 수집 및 분석</h3>
+            <p>스마트워치, 스마트폰 앱 등에서 실시간으로 수면량, 심박수 데이터를 수집합니다.</p>
+          </div>
+          <div class="feature-item">
+            <h3>추천 알고리즘</h3>
+            <p>머신러닝 기반으로 개인별 최적화된 운동 루틴을 제공합니다.</p>
+          </div>
+          <div class="feature-item">
+            <h3>실시간 피드백</h3>
+            <p>사용자의 컨디션에 따라 운동 강도 및 종류를 자동 조절합니다.</p>
+          </div>
+          <div class="feature-item">
+            <h3>동기부여 시스템</h3>
+            <p>운동 기록 및 목표 달성 알림으로 지속적인 동기부여를 지원합니다.</p>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Comparison Section -->
-  <section id="comparison">
-    <div class="container">
-      <h2>Comparison</h2>
-      <div class="comparison">
+    <!-- Comparison Section -->
+    <section id="comparison">
+      <div class="container comparison">
+        <h2>Comparison</h2>
         <table>
           <thead>
-            <tr>
-              <th>기능</th>
-              <th>P사 앱</th>
-              <th>PlanAll</th>
-            </tr>
+            <tr><th>기능</th><th>P사 앱</th><th>PlanAll</th></tr>
           </thead>
           <tbody>
-            <tr>
-              <td>AI 활용</td>
-              <td>제한적</td>
-              <td>실시간 맞춤 추천</td>
-            </tr>
-            <tr>
-              <td>데이터 기반 자동 생성</td>
-              <td>수동 설정 필요</td>
-              <td>심박수, 수면 기반 자동 생성</td>
-            </tr>
-            <tr>
-              <td>실내외 환경 반영</td>
-              <td>없음</td>
-              <td>날씨 API로 환경 감지</td>
-            </tr>
-            <tr>
-              <td>기구 유무 대체 운동</td>
-              <td>제한적</td>
-              <td>다양한 대체 운동 지원</td>
-            </tr>
+            <tr><td>AI 활용</td><td>제한적</td><td>실시간 맞춤</td></tr>
+            <tr><td>자동 루틴 생성</td><td>수동 설정</td><td>자동화</td></tr>
+            <tr><td>실내외 반영</td><td>없음</td><td>날씨 API 연동</td></tr>
+            <tr><td>대체 운동</td><td>제한적</td><td>다양한 대체 지원</td></tr>
           </tbody>
         </table>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Benefits Section -->
-  <section id="benefits">
-    <div class="container">
-      <h2>Benefits</h2>
-      <ul>
-        <li>건강한 운동 습관 형성</li>
-        <li>운동 효율성 극대화</li>
-        <li>부상 위험 감소</li>
-        <li>체계적인 건강 데이터 관리</li>
-      </ul>
-    </div>
-  </section>
+    <!-- Benefits Section -->
+    <section id="benefits">
+      <div class="container">
+        <h2>Benefits</h2>
+        <ul>
+          <li>건강한 운동 습관 형성</li>
+          <li>운동 효율성 극대화</li>
+          <li>부상 위험 감소</li>
+          <li>체계적 데이터 관리</li>
+        </ul>
+      </div>
+    </section>
 
-  <!-- Team Section -->
-  <section id="team">
-    <div class="container">
-      <h2>Team Members</h2>
-      <ul>
-        <li>김지훈 (22313534)</li>
-        <li>박찬승 (22411982)</li>
-        <li>안효원 (22212046)</li>
-        <li>정문기 (22212076)</li>
-      </ul>
-    </div>
-  </section>
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 PlanAll. All rights reserved.</p>
+      </div>
+    </footer>
+  </div>
 
-  <!-- Footer -->
-  <footer>
-    <div class="container">
-      <p>&copy; 2025 PlanAll. All rights reserved.</p>
-    </div>
-  </footer>
+  <script>
+    // 간단한 사용자 데이터 (실습용)
+    const users = [
+      { username: 'user1', password: 'pass1' },
+      { username: 'user2', password: 'pass2' }
+    ];
+
+    // 로그인 처리
+    function login() {
+      const u = document.getElementById('username').value;
+      const p = document.getElementById('password').value;
+      const valid = users.some(user => user.username === u && user.password === p);
+      if (valid) {
+        localStorage.setItem('loggedIn', 'true');
+        showMain();
+      } else {
+        document.getElementById('error').style.display = 'block';
+      }
+    }
+
+    // 메인 화면 표시
+    function showMain() {
+      document.getElementById('login').classList.add('hidden');
+      document.getElementById('mainContent').classList.remove('hidden');
+    }
+
+    // 로그아웃
+    function logout() {
+      localStorage.removeItem('loggedIn');
+      location.reload();
+    }
+
+    // 페이지 로드 시 로그인 상태 확인
+    window.onload = () => {
+      if (localStorage.getItem('loggedIn') === 'true') showMain();
+    };
+  </script>
 </body>
 </html>
