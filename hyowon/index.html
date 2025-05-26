@@ -2,229 +2,115 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PlanAll – 당신의 운동 스케줄을 계획해 드립니다</title>
+  <title>PlanAll – AI 운동 스케줄러</title>
   <style>
-    /* Reset & Base */
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body { font-family:'Noto Sans KR',sans-serif; color:#333; }
-    a { color:#0066cc; text-decoration:none; }
-    a:hover { text-decoration:underline; }
-    /* Hidden class overrides any display */
-    .hidden { display:none !important; }
-    /* Header */
-    header { background:#fff; border-bottom:1px solid #eee; position:sticky; top:0; z-index:100; }
-    .nav { display:flex; justify-content:space-between; align-items:center; padding:20px; }
-    .nav .logo { font-size:1.5rem; font-weight:bold; }
-    .nav ul { display:flex; list-style:none; }
-    .nav li { margin-left:20px; }
-    .btn { padding:10px 20px; border:none; border-radius:4px; cursor:pointer; }
-    /* Login */
-    #login { display:flex; justify-content:center; align-items:center; height:100vh; background:#f5f5f5; }
-    #login .form { background:#fff; padding:40px; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.1); width:300px; }
-    #login h2 { margin-bottom:20px; text-align:center; }
-    #login input { width:100%; padding:10px; margin-bottom:15px; border:1px solid #ccc; border-radius:4px; }
-    #login .btn-login { background:#ff6b6b; color:#fff; width:100%; }
-    /* Sections */
-    section { padding:60px 20px; }
-    .container { max-width:1000px; margin:auto; }
-    h2 { font-size:2rem; margin-bottom:20px; }
-    /* Hero */
-    #hero { background:url('hero-bg.jpg') center/cover no-repeat; color:#fff; text-align:center; padding:120px 20px; }
-    #hero h1 { font-size:3rem; margin-bottom:20px; }
-    /* Features */
-    .features { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:20px; }
-    .feature-item { background:#f9f9f9; padding:20px; border-radius:8px; }
-    /* Comparison */
-    .comparison table { width:100%; border-collapse:collapse; }
-    .comparison th, .comparison td { border:1px solid #ddd; padding:12px; }
-    .comparison th { background:#f1f1f1; }
-    /* Footer */
-    footer { background:#333; color:#fff; text-align:center; padding:20px; }
+    body { font-family: 'Noto Sans KR', sans-serif; margin:0; background:#f9f9f9; }
+    .container { max-width:800px; margin:40px auto; background:#fff; padding:30px 20px; border-radius:16px; box-shadow:0 2px 16px rgba(0,0,0,0.05);}
+    h1 { color: #ff6b6b; }
+    .hidden { display: none !important; }
+    .btn { padding:8px 18px; border-radius:5px; border:none; background:#ff6b6b; color:#fff; cursor:pointer; }
+    table { border-collapse:collapse; width:100%; margin-top:18px; }
+    th,td { border:1px solid #ddd; padding:8px; text-align:center; }
+    th { background:#f3f3f3;}
+    .form { max-width:340px; margin:auto;}
+    input { width:100%; padding:9px; margin-bottom:12px; border:1px solid #ccc; border-radius:5px; }
   </style>
 </head>
 <body>
-  <!-- Login Form -->
+<div class="container">
+  <!-- 로그인/회원가입 영역 -->
   <div id="login">
     <div class="form">
       <h2>PlanAll 로그인</h2>
-      <input type="text" id="username" placeholder="아이디" />
+      <input type="text" id="username" placeholder="이메일" />
       <input type="password" id="password" placeholder="비밀번호" />
-      <button type="button" class="btn btn-login" onclick="login()">로그인</button>
+      <button type="button" class="btn" onclick="login()">로그인</button>
+      <button type="button" class="btn" style="background:#888;margin-top:7px" onclick="showSignupForm()">회원가입</button>
       <p id="error" style="color:red; text-align:center; display:none;">아이디 또는 비밀번호가 올바르지 않습니다.</p>
     </div>
   </div>
-
-  <!-- Main Content -->
-  <div id="mainContent" class="hidden">
-    <!-- Header -->
-    <header>
-      <nav class="nav container">
-        <div class="logo">PlanAll</div>
-        <ul>
-          <li><a href="#hero">Home</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#features">Features</a></li>
-          <li><a href="#comparison">Comparison</a></li>
-          <li><a href="#benefits">Benefits</a></li>
-        </ul>
-        <button type="button" class="btn" onclick="logout()">로그아웃</button>
-      </nav>
-    </header>
-
-    <!-- Hero Section -->
-    <section id="hero">
-      <div class="container">
-        <h1>PlanAll</h1>
-        <p>AI 기반 맞춤형 운동 스케줄을 자동으로 생성해드립니다.</p>
-        <button type="button" class="btn" onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'});">더 알아보기</button>
-      </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about">
-      <div class="container">
-        <h2>About PlanAll</h2>
-        <p>PlanAll은 개인의 신체 데이터(심박수, 수면량 등)와 운동 선호도를 분석해 최적의 운동 스케줄을 자동 생성하는 AI 기반 코칭 시스템입니다.</p>
-      </div>
-    </section>
-
-    <!-- Features Section -->
-    <section id="features">
-      <div class="container">
-        <h2>Key Features</h2>
-        <div class="features">
-          <div class="feature-item">
-            <h3>데이터 수집 및 분석</h3>
-            <p>스마트워치, 스마트폰 앱 등에서 실시간으로 수면량, 심박수 데이터를 수집합니다.</p>
-          </div>
-          <div class="feature-item">
-            <h3>추천 알고리즘</h3>
-            <p>머신러닝 기반으로 개인별 최적화된 운동 루틴을 제공합니다.</p>
-          </div>
-          <div class="feature-item">
-            <h3>실시간 피드백</h3>
-            <p>사용자의 컨디션에 따라 운동 강도 및 종류를 자동 조절합니다.</p>
-          </div>
-          <div class="feature-item">
-            <h3>동기부여 시스템</h3>
-            <p>운동 기록 및 목표 달성 알림으로 지속적인 동기부여를 지원합니다.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Comparison Section -->
-    <section id="comparison">
-      <div class="container comparison">
-        <h2>Comparison</h2>
-        <table>
-          <thead>
-            <tr><th>기능</th><th>P사 앱</th><th>PlanAll</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>AI 활용</td><td>제한적</td><td>실시간 맞춤</td></tr>
-            <tr><td>자동 루틴 생성</td><td>수동 설정</td><td>자동화</td></tr>
-            <tr><td>실내외 반영</td><td>없음</td><td>날씨 API 연동</td></tr>
-            <tr><td>대체 운동</td><td>제한적</td><td>다양한 대체 지원</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <!-- Benefits Section -->
-    <section id="benefits">
-      <div class="container">
-        <h2>Benefits</h2>
-        <ul>
-          <li>건강한 운동 습관 형성</li>
-          <li>운동 효율성 극대화</li>
-          <li>부상 위험 감소</li>
-          <li>체계적 데이터 관리</li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-      <div class="container">
-        <p>&copy; 2025 PlanAll. All rights reserved.</p>
-      </div>
-    </footer>
+  <div id="signup" class="hidden">
+    <div class="form">
+      <h2>회원가입</h2>
+      <input type="text" id="signupEmail" placeholder="이메일" />
+      <input type="password" id="signupPw" placeholder="비밀번호(8자 이상, 영문+숫자)" />
+      <input type="password" id="signupPw2" placeholder="비밀번호 확인" />
+      <button type="button" class="btn" onclick="signup()">가입하기</button>
+      <button type="button" class="btn" style="background:#888;" onclick="showLoginForm()">로그인으로</button>
+      <p id="signupError" style="color:red; text-align:center; display:none;"></p>
+    </div>
   </div>
 
-  <script>
-    // 간단한 사용자 데이터 (실습용)
-    const users = [
-      { username: 'user1', password: 'pass1' },
-      { username: 'user2', password: 'pass2' }
-    ];
-
-    // 로그인 처리
-    function login() {
-      const u = document.getElementById('username').value.trim();
-      const p = document.getElementById('password').value.trim();
-      const valid = users.some(user => user.username === u && user.password === p);
-      if (valid) {
-        localStorage.setItem('loggedIn', 'true');
-        document.getElementById('error').style.display = 'none';
-        showMain();
-      } else {
-        document.getElementById('error').style.display = 'block';
-      }
-    }
-
-    // 메인 화면 표시
-    function showMain() {
-      document.getElementById('login').classList.add('hidden');
-      document.getElementById('mainContent').classList.remove('hidden');
-    }
-
-    // 로그아웃 처리
-    function logout() {
-      localStorage.removeItem('loggedIn');
-      location.reload();
-    }
-
-    // 페이지 로드 시 로그인 상태 확인
-    window.onload = () => {
-      if (localStorage.getItem('loggedIn') === 'true') showMain();
-    };
-  </script>
-
-<h2>Health Data Table</h2>
-<table id="health-table" border="1">
-  <thead id="table-head"></thead>
-  <tbody id="table-body"></tbody>
-</table>
-<script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
+  <!-- 메인 콘텐츠 -->
+  <div id="mainContent" class="hidden">
+    <h1>PlanAll</h1>
+    <button class="btn" style="float:right;" onclick="logout()">로그아웃</button>
+    <h2>건강 데이터 샘플(CSV 업로드)</h2>
+    <input type="file" id="csvFile" accept=".csv" style="margin-bottom:18px;" />
+    <table id="csvTable"></table>
+    <hr style="margin:30px 0;">
+    <h2>팀 프로젝트 소개</h2>
+    <p>PlanAll은 AI기반으로 신체 데이터(심박수, 수면, 스트레스 등)와 선호를 분석하여 최적의 운동 루틴을 추천/기록하는 시스템입니다.</p>
+  </div>
+</div>
 <script>
-  // CSV 파일 경로 (동일 서버 위치 기준)
-  const csvFilePath = 'AnHyowon/health_dataset.csv';
+let users = [
+  { username: 'user1@naver.com', password: 'Pass1234' },
+  { username: 'user2@gmail.com', password: 'Test5678' }
+];
+function saveUsers(){ localStorage.setItem('users', JSON.stringify(users)); }
+function loadUsers(){ const u = localStorage.getItem('users'); if(u) users = JSON.parse(u);}
+loadUsers();
 
-  // CSV 파일 불러오기
-  Papa.parse(csvFilePath, {
-    download: true,
-    header: true,
-    complete: function(results) {
-      const data = results.data;
-      if (data.length === 0) return;
-
-      // 헤더 처리
-      const columns = Object.keys(data[0]);
-      let thead = '<tr>' + columns.map(col => `<th>${col}</th>`).join('') + '</tr>';
-      document.getElementById('table-head').innerHTML = thead;
-
-      // 데이터 처리
-      let tbody = '';
-      data.forEach(row => {
-        tbody += '<tr>' + columns.map(col => `<td>${row[col] ?? ''}</td>`).join('') + '</tr>';
-      });
-      document.getElementById('table-body').innerHTML = tbody;
-    }
+function validateEmail(email){ return /^[\\w-.]+@[\\w-]+\\.[a-zA-Z]{2,}$/.test(email);}
+function validatePw(pw){ return /^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$/.test(pw);}
+function showSignupForm(){ document.getElementById('login').classList.add('hidden'); document.getElementById('signup').classList.remove('hidden'); document.getElementById('signupError').style.display = 'none'; }
+function showLoginForm(){ document.getElementById('signup').classList.add('hidden'); document.getElementById('login').classList.remove('hidden'); document.getElementById('error').style.display = 'none'; }
+function signup(){
+  const email = document.getElementById('signupEmail').value.trim();
+  const pw = document.getElementById('signupPw').value;
+  const pw2 = document.getElementById('signupPw2').value;
+  const err = document.getElementById('signupError');
+  if(!validateEmail(email)){ err.textContent='올바른 이메일 형식이 아닙니다.'; err.style.display='block'; return;}
+  if(!validatePw(pw)){ err.textContent='비밀번호는 8자 이상, 영어+숫자 조합이어야 합니다.'; err.style.display='block'; return;}
+  if(pw!==pw2){ err.textContent='비밀번호가 일치하지 않습니다.'; err.style.display='block'; return;}
+  if(users.some(user=>user.username===email)){ err.textContent='이미 등록된 이메일입니다.'; err.style.display='block'; return;}
+  users.push({ username: email, password: pw }); saveUsers();
+  err.style.display = 'none'; localStorage.setItem('loggedIn', 'true');
+  // health_dataset.json에서 랜덤값으로 새 파일 생성
+  fetch('health_dataset.json').then(res=>res.json()).then(dataset=>{
+    const rand = dataset[Math.floor(Math.random()*dataset.length)];
+    const userHealth = { sleepHours: rand.sleepHours, heartRate: rand.heartRate, stressLevel: rand.stressLevel };
+    const blob = new Blob([JSON.stringify(userHealth,null,2)], {type:'application/json'});
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = email + '.json'; a.click();
+    showMain();
+  });
+}
+function login(){
+  const u = document.getElementById('username').value.trim();
+  const p = document.getElementById('password').value.trim();
+  const valid = users.some(user=>user.username===u && user.password===p);
+  if(valid){ localStorage.setItem('loggedIn','true'); document.getElementById('error').style.display='none'; showMain(); }
+  else document.getElementById('error').style.display='block';
+}
+function showMain(){ document.getElementById('login').classList.add('hidden'); document.getElementById('signup').classList.add('hidden'); document.getElementById('mainContent').classList.remove('hidden'); }
+function logout(){ localStorage.removeItem('loggedIn'); location.reload(); }
+window.onload = ()=>{ if(localStorage.getItem('loggedIn')==='true') showMain(); };
+// CSV 표 업로드
+function parseCSV(text){ const rows=text.trim().split('\\n'); return rows.map(row=>row.split(',')); }
+document.getElementById('csvFile').addEventListener('change',function(e){
+  const file=e.target.files[0]; const reader=new FileReader();
+  reader.onload=function(evt){
+    const data=parseCSV(evt.target.result);
+    const table=document.getElementById('csvTable'); table.innerHTML='';
+    data.forEach((row,i)=>{
+      const tr=document.createElement('tr');
+      row.forEach(cell=>{
+        const td=document.createElement(i==0?'th':'td'); td.textContent=cell; tr.appendChild(td);
+      }); table.appendChild(tr);
+    });
+  }; if(file) reader.readAsText(file,'utf-8');
 });
 </script>
-
-
 </body>
 </html>
