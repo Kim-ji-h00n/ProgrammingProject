@@ -2,115 +2,134 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>PlanAll – AI 운동 스케줄러</title>
+  <title>PlanAll – 웹 운동 추천 데모</title>
   <style>
-    body { font-family: 'Noto Sans KR', sans-serif; margin:0; background:#f9f9f9; }
-    .container { max-width:800px; margin:40px auto; background:#fff; padding:30px 20px; border-radius:16px; box-shadow:0 2px 16px rgba(0,0,0,0.05);}
-    h1 { color: #ff6b6b; }
+    body { font-family:'Noto Sans KR',sans-serif; margin:0; background:#f9f9f9; }
+    .container { max-width:480px; margin:40px auto; background:#fff; padding:30px 20px; border-radius:16px; box-shadow:0 2px 16px rgba(0,0,0,0.06);}
+    h2 { color: #ff6b6b; }
     .hidden { display: none !important; }
-    .btn { padding:8px 18px; border-radius:5px; border:none; background:#ff6b6b; color:#fff; cursor:pointer; }
-    table { border-collapse:collapse; width:100%; margin-top:18px; }
-    th,td { border:1px solid #ddd; padding:8px; text-align:center; }
+    .btn { padding:10px 22px; border-radius:6px; border:none; background:#ff6b6b; color:#fff; cursor:pointer; }
+    input, select { width:100%; padding:8px; margin:8px 0 16px 0; border:1px solid #bbb; border-radius:4px; }
+    table { width:100%; border-collapse:collapse; margin-top:18px; }
+    th,td { border:1px solid #ddd; padding:8px; text-align:center;}
     th { background:#f3f3f3;}
-    .form { max-width:340px; margin:auto;}
-    input { width:100%; padding:9px; margin-bottom:12px; border:1px solid #ccc; border-radius:5px; }
   </style>
 </head>
 <body>
 <div class="container">
-  <!-- 로그인/회원가입 영역 -->
-  <div id="login">
-    <div class="form">
-      <h2>PlanAll 로그인</h2>
-      <input type="text" id="username" placeholder="이메일" />
-      <input type="password" id="password" placeholder="비밀번호" />
-      <button type="button" class="btn" onclick="login()">로그인</button>
-      <button type="button" class="btn" style="background:#888;margin-top:7px" onclick="showSignupForm()">회원가입</button>
-      <p id="error" style="color:red; text-align:center; display:none;">아이디 또는 비밀번호가 올바르지 않습니다.</p>
-    </div>
+
+  <!-- 로그인/회원가입 -->
+  <div id="loginArea">
+    <h2>PlanAll 로그인</h2>
+    <input type="text" id="username" placeholder="이메일">
+    <input type="password" id="password" placeholder="비밀번호">
+    <button class="btn" type ="button" onclick="login()">로그인</button>
+    <button class="btn" type ="button" style="background:#888;" onclick="showSignup()">회원가입</button>
+    <p id="loginMsg" style="color:red; display:none"></p>
   </div>
-  <div id="signup" class="hidden">
-    <div class="form">
-      <h2>회원가입</h2>
-      <input type="text" id="signupEmail" placeholder="이메일" />
-      <input type="password" id="signupPw" placeholder="비밀번호(8자 이상, 영문+숫자)" />
-      <input type="password" id="signupPw2" placeholder="비밀번호 확인" />
-      <button type="button" class="btn" onclick="signup()">가입하기</button>
-      <button type="button" class="btn" style="background:#888;" onclick="showLoginForm()">로그인으로</button>
-      <p id="signupError" style="color:red; text-align:center; display:none;"></p>
-    </div>
+  <div id="signupArea" class="hidden">
+    <h2>PlanAll 회원가입</h2>
+    <input type="text" id="signupEmail" placeholder="이메일">
+    <input type="password" id="signupPw" placeholder="비밀번호(8자 이상,영문+숫자)">
+    <input type="password" id="signupPw2" placeholder="비밀번호 확인">
+    <button class="btn" type ="button" onclick="signup()">가입하기</button>
+    <button class="btn" type ="button"  style="background:#888;" onclick="showLogin()">로그인으로</button>
+    <p id="signupMsg" style="color:red; display:none"></p>
   </div>
 
-  <!-- 메인 콘텐츠 -->
-  <div id="mainContent" class="hidden">
-    <h1>PlanAll</h1>
-    <button class="btn" style="float:right;" onclick="logout()">로그아웃</button>
-    <h2>건강 데이터 샘플(CSV 업로드)</h2>
-    <input type="file" id="csvFile" accept=".csv" style="margin-bottom:18px;" />
-    <table id="csvTable"></table>
-    <hr style="margin:30px 0;">
-    <h2>팀 프로젝트 소개</h2>
-    <p>PlanAll은 AI기반으로 신체 데이터(심박수, 수면, 스트레스 등)와 선호를 분석하여 최적의 운동 루틴을 추천/기록하는 시스템입니다.</p>
+  <!-- 메인 -->
+  <div id="mainArea" class="hidden">
+    <h2>오늘의 건강 데이터 입력</h2>
+    <form id="healthForm" onsubmit="event.preventDefault(); recommend();">
+      <label>수면시간(시간):<input type="number" id="sleepHours" step="0.1" min="0" max="15" required></label>
+      <label>심박수(bpm):<input type="number" id="heartRate" min="40" max="200" required></label>
+      <label>스트레스지수(0~100):<input type="number" id="stressLevel" min="0" max="100" required></label>
+      <label>선호운동:
+        <select id="favorite">
+          <option value="상체">상체</option>
+          <option value="하체">하체</option>
+          <option value="코어">코어</option>
+          <option value="유산소">유산소</option>
+        </select>
+      </label>
+      <button class="btn" type="submit">운동 추천</button>
+    </form>
+    <hr>
+    <div id="recResult"></div>
+    <hr>
+    <h3>운동 기록</h3>
+    <table id="logTable"><thead><tr><th>날짜</th><th>운동루틴</th><th>강도</th><th>소요시간</th></tr></thead><tbody></tbody></table>
+    <button class="btn" onclick="logout()">로그아웃</button>
   </div>
 </div>
 <script>
-let users = [
-  { username: 'user1@naver.com', password: 'Pass1234' },
-  { username: 'user2@gmail.com', password: 'Test5678' }
-];
-function saveUsers(){ localStorage.setItem('users', JSON.stringify(users)); }
-function loadUsers(){ const u = localStorage.getItem('users'); if(u) users = JSON.parse(u);}
-loadUsers();
+// ------------------- 회원 정보 -------------------
+let users = JSON.parse(localStorage.getItem('users')||'[]');
+let logs = JSON.parse(localStorage.getItem('logs')||'[]');
+let loginUser = localStorage.getItem('loginUser')||'';
 
-function validateEmail(email){ return /^[\\w-.]+@[\\w-]+\\.[a-zA-Z]{2,}$/.test(email);}
+// ------------------- 회원가입/로그인 -------------------
+function validateEmail(email){ return /^[\w.\-]+@[\w\-]+\.[a-zA-Z]{2,}$/.test(email);}
 function validatePw(pw){ return /^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$/.test(pw);}
-function showSignupForm(){ document.getElementById('login').classList.add('hidden'); document.getElementById('signup').classList.remove('hidden'); document.getElementById('signupError').style.display = 'none'; }
-function showLoginForm(){ document.getElementById('signup').classList.add('hidden'); document.getElementById('login').classList.remove('hidden'); document.getElementById('error').style.display = 'none'; }
+function showSignup(){ document.getElementById('loginArea').classList.add('hidden'); document.getElementById('signupArea').classList.remove('hidden'); }
+function showLogin(){ document.getElementById('signupArea').classList.add('hidden'); document.getElementById('loginArea').classList.remove('hidden'); }
+function login(){
+  const u=document.getElementById('username').value.trim(), p=document.getElementById('password').value;
+  let msg = document.getElementById('loginMsg');
+  const ok=users.some(user=>user.id===u && user.pw===p);
+  if(ok){ loginUser=u; localStorage.setItem('loginUser',u); msg.style.display='none'; showMain(); }
+  else{ msg.textContent='로그인 실패!'; msg.style.display='block'; }
+}
 function signup(){
-  const email = document.getElementById('signupEmail').value.trim();
-  const pw = document.getElementById('signupPw').value;
-  const pw2 = document.getElementById('signupPw2').value;
-  const err = document.getElementById('signupError');
-  if(!validateEmail(email)){ err.textContent='올바른 이메일 형식이 아닙니다.'; err.style.display='block'; return;}
-  if(!validatePw(pw)){ err.textContent='비밀번호는 8자 이상, 영어+숫자 조합이어야 합니다.'; err.style.display='block'; return;}
-  if(pw!==pw2){ err.textContent='비밀번호가 일치하지 않습니다.'; err.style.display='block'; return;}
-  if(users.some(user=>user.username===email)){ err.textContent='이미 등록된 이메일입니다.'; err.style.display='block'; return;}
-  users.push({ username: email, password: pw }); saveUsers();
-  err.style.display = 'none'; localStorage.setItem('loggedIn', 'true');
-  // health_dataset.json에서 랜덤값으로 새 파일 생성
-  fetch('health_dataset.json').then(res=>res.json()).then(dataset=>{
-    const rand = dataset[Math.floor(Math.random()*dataset.length)];
-    const userHealth = { sleepHours: rand.sleepHours, heartRate: rand.heartRate, stressLevel: rand.stressLevel };
-    const blob = new Blob([JSON.stringify(userHealth,null,2)], {type:'application/json'});
-    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = email + '.json'; a.click();
-    showMain();
+  const email=document.getElementById('signupEmail').value.trim();
+  const pw=document.getElementById('signupPw').value, pw2=document.getElementById('signupPw2').value;
+  let msg = document.getElementById('signupMsg');
+  if(!validateEmail(email)){ msg.textContent='이메일 형식 오류'; msg.style.display='block'; return; }
+  if(!validatePw(pw)){ msg.textContent='비밀번호: 8자이상, 영문+숫자'; msg.style.display='block'; return;}
+  if(pw!==pw2){ msg.textContent='비밀번호 불일치'; msg.style.display='block'; return;}
+  if(users.some(user=>user.id===email)){ msg.textContent='이미 등록된 이메일'; msg.style.display='block'; return;}
+  users.push({id:email, pw:pw}); localStorage.setItem('users',JSON.stringify(users)); msg.style.display='none';
+  loginUser=email; localStorage.setItem('loginUser',email); showMain();
+}
+function logout(){ localStorage.removeItem('loginUser'); location.reload(); }
+function showMain(){
+  document.getElementById('loginArea').classList.add('hidden');
+  document.getElementById('signupArea').classList.add('hidden');
+  document.getElementById('mainArea').classList.remove('hidden');
+  document.getElementById('healthForm').reset();
+  document.getElementById('recResult').innerHTML = '';
+  updateLog();
+}
+if(loginUser) showMain();
+
+// ------------------- 추천 및 기록 -------------------
+function recommend(){
+  const sh=+document.getElementById('sleepHours').value;
+  const hr=+document.getElementById('heartRate').value;
+  const st=+document.getElementById('stressLevel').value;
+  const fav=document.getElementById('favorite').value;
+  let intensity, routine, time;
+  if(sh<5||st>70){ intensity='약함'; routine='스트레칭, 요가, 가벼운 걷기'; time=20; }
+  else if(hr>90||sh<6){ intensity='보통'; routine='런지, 푸쉬업, 버피'; time=30; }
+  else{ intensity='강함'; routine='스쿼트, 데드리프트, 벤치프레스'; time=40; }
+  // 선호운동 반영(단순히 안내)
+  if(fav==='유산소') routine += ', 추가 유산소 권장';
+  const today = new Date().toISOString().slice(0,10);
+  document.getElementById('recResult').innerHTML = `<b>추천루틴:</b> ${routine}<br><b>운동강도:</b> ${intensity}<br><b>소요시간:</b> ${time}분`;
+  // 기록 저장
+  logs.push({id:loginUser, date:today, routine, intensity, time});
+  localStorage.setItem('logs',JSON.stringify(logs));
+  updateLog();
+}
+function updateLog(){
+  const tbody = document.querySelector('#logTable tbody');
+  tbody.innerHTML='';
+  logs.filter(l=>l.id===loginUser).reverse().forEach(l=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td>${l.date}</td><td>${l.routine}</td><td>${l.intensity}</td><td>${l.time}분</td>`;
+    tbody.appendChild(tr);
   });
 }
-function login(){
-  const u = document.getElementById('username').value.trim();
-  const p = document.getElementById('password').value.trim();
-  const valid = users.some(user=>user.username===u && user.password===p);
-  if(valid){ localStorage.setItem('loggedIn','true'); document.getElementById('error').style.display='none'; showMain(); }
-  else document.getElementById('error').style.display='block';
-}
-function showMain(){ document.getElementById('login').classList.add('hidden'); document.getElementById('signup').classList.add('hidden'); document.getElementById('mainContent').classList.remove('hidden'); }
-function logout(){ localStorage.removeItem('loggedIn'); location.reload(); }
-window.onload = ()=>{ if(localStorage.getItem('loggedIn')==='true') showMain(); };
-// CSV 표 업로드
-function parseCSV(text){ const rows=text.trim().split('\\n'); return rows.map(row=>row.split(',')); }
-document.getElementById('csvFile').addEventListener('change',function(e){
-  const file=e.target.files[0]; const reader=new FileReader();
-  reader.onload=function(evt){
-    const data=parseCSV(evt.target.result);
-    const table=document.getElementById('csvTable'); table.innerHTML='';
-    data.forEach((row,i)=>{
-      const tr=document.createElement('tr');
-      row.forEach(cell=>{
-        const td=document.createElement(i==0?'th':'td'); td.textContent=cell; tr.appendChild(td);
-      }); table.appendChild(tr);
-    });
-  }; if(file) reader.readAsText(file,'utf-8');
-});
 </script>
 </body>
 </html>
