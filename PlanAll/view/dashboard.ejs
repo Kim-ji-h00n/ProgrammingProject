@@ -1,0 +1,19 @@
+<h2>안녕하세요 <%= user.username %>님!</h2>
+<form method="POST" action="/dashboard">
+  <input name="heart_rate" placeholder="평균 심박수" required>
+  <input name="sleep_hours" placeholder="수면시간" required>
+  <button type="submit">오늘 기록 저장</button>
+</form>
+
+<h3>내 건강 기록</h3>
+<table border="1">
+  <tr><th>날짜</th><th>심박수</th><th>수면시간</th></tr>
+  <% healths.forEach(h => { %>
+    <tr>
+      <td><%= h.date %></td>
+      <td><%= h.heart_rate %> bpm</td>
+      <td><%= h.sleep_hours %> 시간</td>
+    </tr>
+  <% }) %>
+</table>
+<a href="/logout">로그아웃</a>
