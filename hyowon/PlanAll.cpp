@@ -57,8 +57,8 @@ int main() {
         saveWorkout(log);
         cout << "사용자: " << log.user << " | 강도: " << log.intensity << " | 운동: ";
         for(const auto& ex: log.exercises) cout << ex << " ";
-        cout << "| 시간: " << log.duration << "분n";
+        cout << "| 시간: " << log.duration << "분\n";
     }
-    cout << "n✅ 모든 운동 추천 및 기록 저장이 완료되었습니다.n";
+    cout <<"\n✅ 모든 운동 추천 및 기록 저장이 완료되었습니다.\\n";
     return 0;
 }
