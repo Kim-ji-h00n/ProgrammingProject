@@ -1,14 +1,6 @@
 from flask import Flask, render_template, request, redirect
-from models.health_data import init_db, insert_health_data, get_latest_data, get_recent_stats
+from models.health_data import init_db, insert_health_data, get_latest_data
 from utils.ai_engine import recommend_workout
-
-@app.route('/dashboard')
-def dashboard():
-    latest = get_latest_data()
-    recommendation = recommend_workout(latest)
-    stats = get_recent_stats()
-    return render_template('dashboard.html', data=latest, recommendation=recommendation, stats=stats)
-
 
 app = Flask(__name__)
 init_db()
