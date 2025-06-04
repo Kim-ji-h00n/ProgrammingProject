@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>선호 운동 선택</title>
+  <style>
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      background: #f0f2f5;
+      margin: 0;
+      padding: 40px;
+    }
+    .container {
+      max-width: 400px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      text-align: center;
+    }
+    h2 {
+      margin-bottom: 20px;
+    }
+    select {
+      width: 100%;
+      padding: 12px;
+      font-size: 1.2rem;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      margin-bottom: 25px;
+    }
+    button {
+      padding: 12px 25px;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 6px;
+      background-color: #28a745;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #218838;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+     <h2>선호하는 운동을 모두 선택하세요</h2>
+  <form method="POST" action="/save_prefer">
+    <label><input type="checkbox" name="preferred_exercise" value="걷기"> 걷기</label><br>
+    <label><input type="checkbox" name="preferred_exercise" value="달리기"> 달리기</label><br>
+    <label><input type="checkbox" name="preferred_exercise" value="요가"> 요가</label><br>
+    <label><input type="checkbox" name="preferred_exercise" value="헬스"> 헬스</label><br>
+    <label><input type="checkbox" name="preferred_exercise" value="자전거"> 자전거</label><br>
+    <label><input type="checkbox" name="preferred_exercise" value="수영"> 수영</label><br>
+    <label><input type="checkbox" name="preferred_exercise" value="필라테스"> 필라테스</label><br>
+    <br>
+      <button type="submit">저장하기</button>
+    </form>
+  </div>
+</body>
+</html>
