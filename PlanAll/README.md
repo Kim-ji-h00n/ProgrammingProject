@@ -2,8 +2,13 @@
 
 ## 실행 방법
 ```bash
-pip install flask
+1. 의존성 설치
+pip install -r requirements.txt
+2. 서버 실행 
 python app.py
+3. (선택) 다른 기기에서 접속하고 싶다면
+http://<이 컴퓨터의 IP>:5000
+(Windows에서 `ipconfig`로 IP 확인)
 ```
 
 ## 기능
