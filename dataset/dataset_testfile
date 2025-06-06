@@ -14,20 +14,18 @@ struct HealthStatus {
     int stressLevel;
 
     void printRecommendation() const {
-        cout << "¢º »ç¿ëÀÚ: " << name << endl;
-        cout << "  - ¼ö¸é: " << sleepHours << "½Ã°£ | ½É¹Ú¼ö: " << heartRate << "bpm | ½ºÆ®·¹½º: " << stressLevel << endl;
+        cout << "â–¶ ì‚¬ìš©ìž: " << name << endl;
+        cout << "  - ìˆ˜ë©´: " << sleepHours << "ì‹œê°„ | ì‹¬ë°•ìˆ˜: " << heartRate << "bpm | ìŠ¤íŠ¸ë ˆìŠ¤: " << stressLevel << endl;
 
         if (sleepHours < 5 || stressLevel > 70) {
-            cout << "  ¡æ ¿îµ¿ °­µµ: ¾àÇÔ" << endl;
-            cout << "  ¡æ ÃßÃµ ¿îµ¿: ½ºÆ®·¹Äª, ¿ä°¡, °¡º­¿î °È±â" << endl;
-        }
-        else if (heartRate > 90 || sleepHours < 6) {
-            cout << "  ¡æ ¿îµ¿ °­µµ: º¸Åë" << endl;
-            cout << "  ¡æ ÃßÃµ ¿îµ¿: ·¯´×, Çª½¬¾÷, ´ýº§ ½ºÄõÆ®" << endl;
-        }
-        else {
-            cout << "  ¡æ ¿îµ¿ °­µµ: °­ÇÔ" << endl;
-            cout << "  ¡æ ÃßÃµ ¿îµ¿: ½ºÄõÆ®, º¥Ä¡ÇÁ·¹½º, µ¥µå¸®ÇÁÆ®" << endl;
+            cout << "  â†’ ìš´ë™ ê°•ë„: ì•½í•¨" << endl;
+            cout << "  â†’ ì¶”ì²œ ìš´ë™: ìŠ¤íŠ¸ë ˆì¹­, ìš”ê°€, ê°€ë²¼ìš´ ê±·ê¸°" << endl;
+        } else if (heartRate > 90 || sleepHours < 6) {
+            cout << "  â†’ ìš´ë™ ê°•ë„: ë³´í†µ" << endl;
+            cout << "  â†’ ì¶”ì²œ ìš´ë™: ëŸ¬ë‹, í‘¸ì‰¬ì—…, ë¤ë²¨ ìŠ¤ì¿¼íŠ¸" << endl;
+        } else {
+            cout << "  â†’ ìš´ë™ ê°•ë„: ê°•í•¨" << endl;
+            cout << "  â†’ ì¶”ì²œ ìš´ë™: ìŠ¤ì¿¼íŠ¸, ë²¤ì¹˜í”„ë ˆìŠ¤, ë°ë“œë¦¬í”„íŠ¸" << endl;
         }
 
         cout << "-------------------------------\n";
