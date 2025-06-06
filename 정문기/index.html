@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>맞춤형 운동 프로그램 추천</title>
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #333333;
+            --primary-color: #4CAF50;
+            --secondary-color: #45a049;
+            --border-color: #dddddd;
+            --input-bg: #f8f9fa;
+            --result-bg: #f8f9fa;
+            --result-border: #e9ecef;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #1a1a1a;
+            --text-color: #ffffff;
+            --primary-color: #66bb6a;
+            --secondary-color: #81c784;
+            --border-color: #404040;
+            --input-bg: #2d2d2d;
+            --result-bg: #2d2d2d;
+            --result-border: #404040;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            cursor: pointer;
+            font-size: 1.5rem;
+            padding: 0.5rem;
+            transition: transform 0.3s;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        .input-section {
+            background-color: var(--input-bg);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        h1, h2 {
+            color: var(--text-color);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: var(--secondary-color);
+        }
+
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+
+        .result-container {
+            background-color: var(--result-bg);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-top: 2rem;
+            border: 1px solid var(--result-border);
+        }
+
+        .result-container h2 {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .result-container h3 {
+            color: var(--text-color);
+            font-size: 1.4rem;
+            margin: 1.5rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .result-container ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .result-container li {
+            margin: 0.8rem 0;
+            padding: 0.8rem;
+            background-color: var(--bg-color);
+            border-radius: 5px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+
+        .result-container li:hover {
+            transform: translateX(5px);
+        }
+
+        .warning {
+            color: #dc3545;
+            background-color: rgba(220, 53, 69, 0.1);
+            padding: 0.8rem;
+            border-radius: 5px;
+            margin: 0.8rem 0;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .input-section {
+                padding: 1.5rem;
+            }
+
+            .result-container {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>맞춤형 운동 프로그램 추천</h1>
+            <button class="theme-toggle" id="themeToggle">🌙</button>
+        </header>
+
+        <main>
+            <section class="input-section">
+                <h2>신체 정보 입력</h2>
+                <form id="workoutForm">
+                    <div class="form-group">
+                        <label for="height">키 (cm)</label>
+                        <input type="number" id="height" name="height" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="weight">체중 (kg)</label>
+                        <input type="number" id="weight" name="weight" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="age">나이</label>
+                        <input type="number" id="age" name="age" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="goal">운동 목표</label>
+                        <select id="goal" name="goal" required>
+                            <option value="">목표를 선택하세요</option>
+                            <option value="bulking">근육량 증가</option>
+                            <option value="cutting">체지방 감소</option>
+                            <option value="endurance">지구력 향상</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="split">운동 부위 선택</label>
+                        <select id="split" name="split" required>
+                            <option value="">분할 방식을 선택하세요</option>
+                            <option value="3split">3분할(초/중급자)</option>
+                            <option value="4split">4분할(중급자)</option>
+                            <option value="fullbody">무분할(초심자)</option>
+                        </select>
+                    </div>
+                    
+                    <button type="submit" id="submit">프로그램 추천받기</button>
+                </form>
+
+                <div id="result" class="result-container"></div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // API 키 설정 제미나이 개꿀꿀
+        const GEMINI_API_KEY = 'AIzaSyB4ZlaVOYVmTCSvEODU7XEVm4Z2JDMO6PM'; // 여기에 Gemini API 키를 입력하세요
+
+        // API 엔드포인트가 망가지면 제미나이 API 요금폭탄 펑펑
+        const API_ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
+
+        // 요청 제한 시간 (10초)
+        let lastRequestTime = 0;
+        const REQUEST_INTERVAL = 10000;
+
+        // 다크 모드 토글 기능 이건 꼭 잇오야지 ㅋㅋ
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+
+        // 저장된 테마 불러오기
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            body.setAttribute('data-theme', savedTheme);
+            themeToggle.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+        }
+
+        // 테마 토글 이벤트 리스너
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            body.setAttribute('data-theme', newTheme);
+            themeToggle.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+            localStorage.setItem('theme', newTheme);
+        });
+
+        // 입력 필드 설정
+        const heightInput = document.getElementById('height');
+        const weightInput = document.getElementById('weight');
+        const ageInput = document.getElementById('age');
+        const goalSelect = document.getElementById('goal');
+        const splitSelect = document.getElementById('split');
+
+        // 폼 제출 이벤트 리스너
+        document.getElementById('workoutForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // 현재 시간 확인
+            const currentTime = Date.now();
+            if (currentTime - lastRequestTime < REQUEST_INTERVAL) {
+                alert('잠시 후 다시 시도해주세요.');
+                return;
+            }
+            
+            // 입력값 가져오기
+            const height = parseFloat(heightInput.value);
+            const weight = parseFloat(weightInput.value);
+            const age = parseInt(ageInput.value);
+            const goal = goalSelect.value;
+            const split = splitSelect.value;
+            
+            // 입력값 검증
+            if (!height || !weight || !age || !goal || !split) {
+                alert('모든 필수 정보를 입력해주세요.');
+                return;
+            }
+
+            // BMI 계산
+            const heightInMeters = height / 100;
+            const bmi = weight / (heightInMeters * heightInMeters);
+            
+            // 제출 버튼 비활성화
+            const submitButton = document.getElementById('submit');
+            submitButton.disabled = true;
+            submitButton.textContent = '처리 중...';
+            
+            try {
+                // Gemini API 요청 이긴한데 프롬포트를 좀 수정 하면 맛잇어짐 만능 ㄷㄷ
+                const response = await fetch(`${API_ENDPOINT}?key=${GEMINI_API_KEY}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        contents: [{
+                            parts: [{
+                                text: `당신은 전문적인 피트니스 트레이너입니다. 다음 정보를 바탕으로 상세한 운동 프로그램을 HTML 형식으로 추천해주세요:
+
+키: ${height}cm
+체중: ${weight}kg
+나이: ${age}세
+목표: ${goal}
+분할 방식: ${split}
+BMI: ${bmi.toFixed(1)}
+
+다음 형식으로 HTML로 응답해주세요:
+<h2>맞춤형 운동 프로그램</h2>
+<div class="user-info">
+    <h3>기본 정보</h3>
+    <ul>
+        <li>키: ${height}cm</li>
+        <li>체중: ${weight}kg</li>
+        <li>나이: ${age}세</li>
+        <li>BMI: ${bmi.toFixed(1)}</li>
+    </ul>
+</div>
+<h3>운동 프로그램</h3>
+<ul>
+    [운동 프로그램 상세 내용]
+</ul>
+<h3>식단 가이드</h3>
+<ul>
+    [식단 가이드 상세 내용]
+</ul>
+<h3>추천 보충제</h3>
+<ul>
+    [보충제 추천 내용]
+</ul>
+
+각 섹션은 상세하고 구체적인 내용을 포함해야 합니다.`
+                            }]
+                        }]
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`API 오류 (${response.status})`);
+                }
+
+                const data = await response.json();
+                const text = data.candidates[0].content.parts[0].text;
+                
+                // 결과 표시
+                const resultDiv = document.getElementById('result');
+                resultDiv.innerHTML = text;
+                
+                // 요청 시간 업데이트
+                lastRequestTime = currentTime;
+                
+            } catch (error) {
+                console.error('API 요청 오류:', error);
+                alert(`프로그램 추천을 가져오는 중 오류가 발생했습니다: ${error.message}`);
+            } finally {
+                // 제출 버튼 활성화
+                submitButton.disabled = false;
+                submitButton.textContent = '프로그램 추천받기';
+            }
+        });
+    </script>
+</body>
+</html> 
