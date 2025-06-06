@@ -47,28 +47,28 @@ class HealthRoutineRecommender:
         self.model = joblib.load(model_path)
         self.label_encoders = joblib.load(encoders_path)
         
-    if __name__ == "__main__":
-         data = {
-             'age': [25, 35, 29, 40, 22, 31],
-             'weight': [70, 85, 65, 90, 60, 75],
-             'goal': ['muscle_gain', 'fat_loss', 'maintenance', 'fat_loss', 'muscle_gain', 'maintenance'],
-             'experience': ['beginner', 'advanced', 'intermediate', 'advanced', 'beginner', 'intermediate'],
-             'preference': ['weights', 'cardio', 'mixed', 'cardio', 'weights', 'mixed'],
-             'routine': ['bulk_up', 'cutting', 'hybrid', 'cutting', 'bulk_up', 'hybrid']
-             }
-         df = pd.DataFrame(data)
+if __name__ == "__main__":
+    data = {
+        'age': [25, 35, 29, 40, 22, 31],
+        'weight': [70, 85, 65, 90, 60, 75],
+        'goal': ['muscle_gain', 'fat_loss', 'maintenance', 'fat_loss', 'muscle_gain', 'maintenance'],
+        'experience': ['beginner', 'advanced', 'intermediate', 'advanced', 'beginner', 'intermediate'],
+        'preference': ['weights', 'cardio', 'mixed', 'cardio', 'weights', 'mixed'],
+        'routine': ['bulk_up', 'cutting', 'hybrid', 'cutting', 'bulk_up', 'hybrid']
+    }
+    df = pd.DataFrame(data)
  
          # 모델 학습 및 저장
-         recommender = HealthRoutineRecommender()
-         recommender.fit(df)
-         recommender.save()
+    recommender = HealthRoutineRecommender()
+    recommender.fit(df)
+    recommender.save()
      
          # 새로운 사용자 예측
-         new_user = {
-             'age': 28,
-             'weight': 68,
-             'goal': 'muscle_gain',
-             'experience': 'beginner',
-             'preference': 'weights'
-         }
-         print("✅ 추천 루틴:", recommender.predict(new_user))
+    new_user = {
+        'age': 28,
+         'weight': 68,
+         'goal': 'muscle_gain',
+            'experience': 'beginner',
+          'preference': 'weights'
+    }
+    print("✅ 추천 루틴:", recommender.predict(new_user))
