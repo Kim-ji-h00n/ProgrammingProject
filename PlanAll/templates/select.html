@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>PlanAll - 운동 선택</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+    <div class="container mt-5">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h2>운동 종목 선택</h2>
+            </div>
+            <div class="card-body">
+                <form method="post" action="/choose_exercise">
+                    <div class="mb-3">
+                        <label for="exercise" class="form-label">운동 종목</label>
+                        <select id="exercise" name="exercise" class="form-select">
+                            <option>데드리프트</option>
+                            <option>덤벨 숄더 프레스</option>
+                            <option>레그프레스</option>
+                            <option>런지</option>
+                            <option>바벨 로우</option>
+                            <option>바벨 컬</option>
+                            <option>벤치프레스</option>
+                            <option>스쿼트</option>
+                            <option>싯업(윗몸일으키기)</option>
+                            <option>오버헤드 프레스</option>
+                            <option>카프 레이즈</option>
+                            <option>크런치</option>
+                            <option>트라이셉스 익스텐션</option>
+                            <option>턱걸이</option>
+                            <option>풀업</option>
+                            <option>푸쉬업(팔굽혀펴기)</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-success">선택</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <br><br>
+    <a href="/" class="btn btn-primary">뒤로 가기</a>
+</body>
+
+</html>

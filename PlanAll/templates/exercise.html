@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <title>운동 실행 화면</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
+
 <body class="bg-light">
     <div class="container mt-5">
         <div class="card shadow">
@@ -13,10 +15,35 @@
             </div>
             <div class="card-body">
                 <p class="lead">선택한 운동: <strong>{{ exercise }}</strong></p>
+                <input type="hidden" name="exercise" value="{{ exercise }}">
                 <p>운동을 시작하려면 아래 버튼을 누르세요.</p>
-                <a href="/" class="btn btn-primary">운동 끝내기</a>
+
+                <form method="POST" action="/exercise_log">
+                    <input type="hidden" name="exercise" value="{{ exercise }}">
+
+                    <div class="mb-3">
+                        <label for="reps" class="form-label">횟수</label>
+                        <input type="number" id="reps" name="reps" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="sets" class="form-label">세트</label>
+                        <input type="number" id="sets" name="sets" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-success" onclick="return confirmAndSubmit(event)">기록 저장 & 운동
+                        종료</button>
             </div>
         </div>
     </div>
+
+    <script>
+    function confirmAndSubmit(event) {
+        if (!confirm("운동을 종료하시겠습니까?")) {
+            event.preventDefault(); // "아니오" 선택 시 제출 중단
+            return false;
+        }
+        return true; // "예" 선택 시 제출 진행
+    }
+</script>
 </body>
+
 </html>
